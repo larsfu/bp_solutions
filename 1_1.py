@@ -42,4 +42,4 @@ print(numbers[isprime(numbers)])
 #             ^^^^^^^^^^^^^^^^
 # The return value if this is called a mask. It contains a True/False value for every
 # item in the list it refers to. When you execute `array[mask]`, you get back only
-# the list items that had a True value in as their mask entry.
+# the list items that had True as their mask entry.
