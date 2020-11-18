@@ -6,8 +6,9 @@ import numpy as np
 ######
 text = "Hello DELTA!"
 print(text)
-f = open("build/file1.txt", "w+")
-f.write(text)
+# The `with` statement automatically closes the file after writing is done.
+with open("build/file1.txt", "w") as f:
+    f.write(text)
 
 
 ######
@@ -23,9 +24,9 @@ np.savetxt("build/file2.txt", array, fmt="%i")
 ######
 # c) #
 ######
-# This so-called “decorator” allows this function to be applied to a numpy array
+# This so-called “decorator” allows this function to be applied to a numpy array.
 @np.vectorize
-# The function isprime therefore only needs to check the prime-ness of one number
+# The function isprime therefore only needs to check the prime-ness of one number.
 def isprime(a):
     # A number is a prime when it is larger than one and all division remainders up
     # to the number itself are non-zero
