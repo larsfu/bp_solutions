@@ -21,6 +21,7 @@ M = np.sqrt(2 * m_e**2 + 2 * (E1 * E2 + np.sqrt(E1**2 - m_e**2) * np.sqrt(E2**2 
 ######
 # b) #
 ######
+plt.title(r'Invariant mass of head-on electron collision with $E_2\,=\,0$')
 # Plot in 1D for E_2 = 0 (takes just the first row of the grid)
 plt.plot(E, M[0])
 # You can use some LaTeX commands in labels if you enclose them in $…$
@@ -45,6 +46,7 @@ plt.close()
 ######
 # Plot in 3D
 fig = mpl.figure.Figure()
+fig.suptitle('Invariant mass of head-on electron collision')
 ax = Axes3D(fig)
 # The stride parameters allow you to skip values if plotting is too slow.
 # `cmap` chooses a color map for the z value. Good color maps are viridis, plasma and magma.
@@ -57,6 +59,7 @@ ax.set_zlabel(r'$\sqrt{s}$ / GeV/c$^2$')
 fig.savefig('build/1_2/3d.png', dpi=150)
 
 # Plot in 2D (optional)
+plt.title('Invariant mass of head-on electron collision')
 # A 2D color plot is nothing else than an image. There fore we use `imshow` to make one.
 # Computer images traditionally have their origin on the upper left, we need to change that.
 # `extent` tells matplotlib the size of the image in units of energy for the tick labels.
