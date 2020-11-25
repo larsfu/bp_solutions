@@ -10,13 +10,20 @@ from mpl_toolkits.mplot3d import Axes3D
 # Load electron mass from scipy constants, then divide by 1000 to convert to GeV/c^2
 m_e = const.value('electron mass energy equivalent in MeV') * 1e-3
 
-# Create 200 equidistant points from 511keV to 6GeV
-E = np.linspace(511e-6, 6, 150)
-# Meshgrid takes the 1D energy points and creates a 2D grid (with a size of 150×150)
+# Create 150 equidistant points from 511keV to 6GeV
+E = np.linspace(m_e, 6, 150)
+# Meshgrid takes the 1D energy values and creates two 2D arrays that allow getting
+# all combinations of the 1D arrays when used in element-wise operations:
+#                                    ((a, b, c),      ((d, d, d)
+# (a, b, c) and (d, e, f)   become    (a, b, c),  and  (e, e, e)
+#                                     (a, b, c))       (f, f, f))
 E1, E2 = np.meshgrid(E, E)
-# In a head-on collision, the invariant mass formula is simple:
-M = np.sqrt(2 * m_e**2 + 2 * (E1 * E2 + np.sqrt(E1**2 - m_e**2) * np.sqrt(E2**2 - m_e**2)))
-
+#                                                       ((ad, bd, cd)
+# Now, when you do E1 * E2 for example, it results in    (ae, be, ce)
+#                                                        (af, bf, cf))
+# This allows sampling a large parameter space without making the formula any more
+# complex than for one value each. In a head-on collision, the invariant mass formula is:
+M = np.sqrt(2 * (m_e**2 + E1 * E2 + np.sqrt(E1**2 - m_e**2) * np.sqrt(E2**2 - m_e**2)))
 
 ######
 # b) #
