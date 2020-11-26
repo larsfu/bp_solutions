@@ -41,9 +41,7 @@ plt.xlim(E[0], E[-1])
 plt.ylim(M[0][0], M[0][-1])
 # `plt.tight_layout` reorders the graphical elements optimally for smaller margins.
 plt.tight_layout(pad=0.5)
-# When you export an image, the `dpi` (dots per inch) parameter sets the resolution.
-# Most of the time, it is better to save plots as PDF files (vector) and not raster images.
-plt.savefig('build/1_2/1d.png', dpi=150)
+plt.savefig('build/1_2/1d.pdf')
 # Close the plot so nothing of this shows up in the next ones.
 plt.close()
 
@@ -63,7 +61,7 @@ ax.invert_yaxis()
 ax.set_xlabel(r'$E_1$ / GeV')
 ax.set_ylabel(r'$E_2$ / GeV')
 ax.set_zlabel(r'$\sqrt{s}$ / GeV/c$^2$')
-fig.savefig('build/1_2/3d.png', dpi=150)
+fig.savefig('build/1_2/3d.pdf')
 
 # Plot in 2D (optional)
 plt.title('Invariant mass of head-on electron collision')
@@ -76,5 +74,5 @@ plt.xlabel(r'$E_1$ / GeV')
 plt.ylabel(r'$E_2$ / GeV')
 plt.colorbar(label=r'$\sqrt{s}$ / GeV/c$^2$')
 plt.tight_layout(pad=0.5)
-plt.savefig('build/1_2/2d.png', dpi=150)
+plt.savefig('build/1_2/2d.pdf')
 plt.close()
