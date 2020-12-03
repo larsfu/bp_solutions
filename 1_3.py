@@ -88,7 +88,7 @@ def do_iteration(init, field_size, electrode_offset, electrode_width, stop):
 # here, but may be in the future for projects with multiple files.
 if __name__ == '__main__':
     field_size = (100, 100)
-    electrode_offset = 20  # from border
+    electrode_offset = 20  # from boundary
     electrode_width = 8
     # Stop criterion. The iteration is stopped when the maximum absolute difference between two
     # iteration steps is less than this
