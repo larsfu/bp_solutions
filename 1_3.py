@@ -1,26 +1,28 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.ndimage import convolve
-#from p_tqdm import p_map
-import matplotlib
+# from p_tqdm import p_map
+# import matplotlib
+
 
 # This function takes a potential array and resets the electrodes to their initial values
 def set_electrodes(potential, o, w):
     potential[o:o+w,    o:o+w] = potential[-o-w:-o, -o-w: -o] =  1000
     potential[o:o+w, -o-w: -o] = potential[-o-w:-o,    o:o+w] = -1000
 
+
 # This function takes the current potential array and does one iteration step on it
 def iterate_manual(old):
     # We need two arrays, old and new, therefore we copy the old one
     copied = np.copy(old)
-    
+
     # To calculate the averages, the whole field is shifted in four different ways
     # instead of manually looping through the array in two four loops. This is
     # much faster.
 
     # central nodes
     copied[1:-1, 1:-1] = (old[0:-2, 1:-1] + old[2:, 1:-1] + old[1:-1, 0:-2] + old[1:-1, 2:]) / 4
-    #     ^^^^^^^^^^^^
+    #      ^^^^^^^^^^
     #     Everything but the outermost pixels is considered here
 
     # For the edges and corners, there still need to be special cases.
@@ -37,6 +39,7 @@ def iterate_manual(old):
 
     return copied
 
+
 # This is a drop-in replacement for the function above and does almost the same
 def iterate_convolve(potential):
     # An alternative approach is to consider the iteration a convolution with the following
@@ -52,6 +55,7 @@ def iterate_convolve(potential):
     # https://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.convolve.html
     # fore more details and other variants.
     return convolve(potential, weights, mode='nearest')
+
 
 # This function does the whole iteration
 def do_iteration(init, field_size, electrode_offset, electrode_width, stop):
@@ -84,17 +88,17 @@ def do_iteration(init, field_size, electrode_offset, electrode_width, stop):
 # here, but may be in the future for projects with multiple files.
 if __name__ == '__main__':
     field_size = (100, 100)
-    electrode_offset = 20 # from border
+    electrode_offset = 20  # from border
     electrode_width = 8
     # Stop criterion. The iteration is stopped when the maximum absolute difference between two
     # iteration steps is less than this
     ε = 1e-4
     c_list, potential = do_iteration(1, field_size, electrode_offset, electrode_width, ε)
-    
+
     # Plot the evolution of the convergence
     plt.plot(c_list)
     plt.yscale('log')
-    plt.xlim(-300, len(c_list)+300)
+    plt.xlim(-300, len(c_list) + 300)
     plt.ylabel('Maximum absolute difference to previous iteration')
     plt.xlabel('Iteration')
     plt.tight_layout(pad=.5)
@@ -126,12 +130,12 @@ if __name__ == '__main__':
     # which gives a large performance boost on modern processors.
 
     # inits = np.append(np.geomspace(-1, -1e-4, 9), np.geomspace(1e-4, 1, 9))
-    # convergences = p_map(lambda init: 
+    # convergences = p_map(lambda init:
     #   do_iteration(init, field_size, electrode_offset, electrode_width, 0)[0], inits)
-    # 
+    #
     # norm = matplotlib.colors.Normalize(vmin=0, vmax=inits.shape[0])
     # s_m = matplotlib.cm.ScalarMappable(cmap='Spectral', norm=norm)
-    # 
+    #
     # for idx, (c, i) in enumerate(zip(convergences, inits)):
     #     plt.plot(c, alpha=1, label=f'{i:.1e}', color=s_m.to_rgba(idx))
     # plt.yscale('log')
