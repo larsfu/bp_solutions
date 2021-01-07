@@ -6,8 +6,8 @@ from scipy.integrate import solve_ivp
 from scipy.signal import argrelmin
 
 # This method implements the classic Runge–Kutta method of order 4.
-# Its parameters are chosen in this way to be a drop-in replacement for solve_ivp
-# fun is the ODE system to integrate, t_span the t variable interval, 
+# Its parameters are chosen in this way to be a drop-in replacement for solve_ivp.
+# fun is the ODE system to integrate, t_span the t variable interval,
 # max_step the (fixed) step size, args is a list of arguments that are passed to fun.
 def rk4(fun, t_span, y0, max_step=800e-9, args=None):
     h = max_step
@@ -57,7 +57,7 @@ def is_stable(δ0, ΔΨ0, t_max, max_step, *args, return_orbit=False):
     skip = np.argmin(close_enough)
     revolution = np.argmax(close_enough[skip:])
 
-    # If a close approach ist found (`revolution` nonzero), we can calculate the synchrotron
+    # If a close approach is found (`revolution` nonzero), we can calculate the synchrotron
     # frequency from the number of steps needed to reach the point. If not, we return np.nan.
     synchrotron_frequency = 1/(args[2] * (revolution + skip)) if revolution > 0 else np.nan
 
@@ -82,8 +82,8 @@ if __name__ == '__main__':
     args = (E, V0, T0, RF, α, Ψs)
     
     # Define the parameter space.
-    δ0 = np.linspace(-0.04, 0.04, 1*15)
-    ΔΨ0 = np.linspace(-np.pi, np.pi, 1*20)
+    δ0 = np.linspace(-0.04, 0.04, 8*15)
+    ΔΨ0 = np.linspace(-np.pi, np.pi, 8*20)
 
     A, B = np.meshgrid(δ0, ΔΨ0)
     fsync = is_stable(A, B, turns*T0, T0, *args)
