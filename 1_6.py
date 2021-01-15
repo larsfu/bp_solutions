@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import scipy.constants as const
 from scipy.optimize import OptimizeResult
 from scipy.integrate import solve_ivp
-from scipy.signal import argrelmin
 
 # This method implements the classic Runge–Kutta method of order 4.
 # Its parameters are chosen in this way to be a drop-in replacement for solve_ivp.
@@ -37,7 +36,7 @@ def longitudinal(t, y, E, V0, T0, RF, α, Ψs):
     dΔΨdt = np.pi * 2 * RF * α * δ
     return dδdt, dΔΨdt
 
-# Simulate an orbit and find out whether it is stable
+# Simulate an orbit and find out whether it is stable.
 @np.vectorize
 def is_stable(δ0, ΔΨ0, t_max, max_step, *args, return_orbit=False):
     # Use our own Runge-Kutta implementation to solve the system.
