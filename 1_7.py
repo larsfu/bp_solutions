@@ -50,7 +50,7 @@ def is_stable_vectorized(δ0, ΔΨ0, t_max, max_step, *args):
     # the result gets close enoxugh to the initial values. Close enough is defined
     # by trial-and-error as 0.022 in the following norm:
     scale = np.array((np.minimum(np.max(ΔΨ, axis=1) - np.min(ΔΨ, axis=1), 2 * np.pi), 
-             np.max(δ, axis=1) - np.min(δ, axis=1)))
+                                 np.max( δ, axis=1) - np.min( δ, axis=1)))
 
     close_enough = np.sqrt(((ΔΨ - ΔΨ[:, 0, None]) / scale[0][:, None])**2 +
                            (( δ -  δ[:, 0, None]) / scale[1][:, None])**2) < 0.022
